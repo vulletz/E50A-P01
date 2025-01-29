@@ -1,11 +1,12 @@
--- Intial script
-CREATE TABLE users (
+/* 
+TABLE: users
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     email VARCHAR(100) UNIQUE
-);
+*/
 
--- Add users
-INSERT INTO users (name, email) VALUES
+/*
+VALUES:
 ('Alice', 'alice@example.com'),
 ('Bob', 'bob@example.com');
+*/
