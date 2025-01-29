@@ -16,17 +16,17 @@ jobs:
     services:
       postgres:
         image: postgres:latest
-      env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: testdb
-      options: >-
-        --healt-cmd pg_isready
-        --healt-interval 10s
-        --healt-timeout 5s
-        --healt-retries 5
-      ports:
-      - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
+        options: >-
+          --healt-cmd pg_isready
+          --healt-interval 10s
+          --healt-timeout 5s
+          --healt-retries 5
+        ports:
+        - 5432:5432
 
     steps:
       - name: Check out repository code
