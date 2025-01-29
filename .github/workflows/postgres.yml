@@ -75,13 +75,17 @@ jobs:
           git config --global user.email "actions@github.com"
           
           branch_name="auto-pr-branch"
-
+      
           git checkout -b "$branch_name"
-
+      
           git add data/test_results.csv
-
+      
           git commit -m "Update CSV file"
-
+      
+          # Pull the latest changes from the remote branch
+          git pull origin main --rebase
+      
+          # Push the changes to the remote branch
           git push origin "$branch_name"
   
       - name: Create Pull Request
