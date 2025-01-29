@@ -27,26 +27,7 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: Restore instructions file
-        run: |
-          # Specify the branch or commit to restore the file from
-          branch_or_commit="93e4d65"
-          file_to_restore="sql/script.sql"
-
-          # Fetch the branch or commit
-          git fetch origin $branch_or_commit
-
-          # Restore the specific file
-          git checkout origin/$branch_or_commit -- $file_to_restore
-
-          # Commit the restored file
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add $file_to_restore
-          git commit -m "Restore $file_to_restore from $branch_or_commit"
-          git push origin HEAD:main        
+        uses: actions/checkout@v4      
 
       - name: Wait for PostgreSQL to be ready
         run: until pg_isready -h localhost -p 5432; do sleep 1; done
