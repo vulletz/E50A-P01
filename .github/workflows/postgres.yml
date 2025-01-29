@@ -1,0 +1,53 @@
+name: PostgreSQL
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+      env:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: testdb
+      options: >-
+        --healt-cmd pg_isready
+        --healt-interval 10s
+        --healt-timeout 5s
+        --healt-retries 5
+      ports:
+      - 5432:5432
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Wait for PostgreSQL to be ready
+        run: until pg_isready -h localhost -p 5432; do sleep 1; done
+
+      - name: Run SQL scripts
+        run: |
+          psql -h localhost -U postgres -d testdb -f sql/script.sql
+        env:
+          PGPASSWORD: postgres
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install psycopg2 unittest
+
+      - name: Run unit tests
+        run: python test_db.py  
