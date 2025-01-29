@@ -5,6 +5,7 @@ CREATE TABLE users (
     email VARCHAR(100) UNIQUE
 );
 
+-- Add users
 INSERT INTO users (name, email) VALUES
 ('Alice', 'alice@example.com'),
 ('Bob', 'bob@example.com');
