@@ -85,9 +85,9 @@ jobs:
 
           git push origin "$branch_name"
 
-          git checkout feature/results
+          git checkout res
           git merge --no-ff "$branch_name"
-          git push origin feature/results
+          git push origin res
 
           # delete the temporary branch
           git branch -d "$branch_name"
