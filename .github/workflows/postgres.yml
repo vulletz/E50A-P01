@@ -79,6 +79,9 @@ jobs:
           timestamp=$(date +'%Y%m%d%H%M%S')
           branch_name="update-csv-$timestamp"
 
+          git pull origin results
+          git push origin results
+
           git checkout -b "$branch_name"
 
           git add data/test_results.csv
