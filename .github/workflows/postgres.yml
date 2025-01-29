@@ -33,7 +33,7 @@ jobs:
       - name: Restore instructions file
         run: |
           # Specify the branch or commit to restore the file from
-          branch_or_commit="main"
+          branch_or_commit="93e4d65"
           file_to_restore="sql/script.sql"
 
           # Fetch the branch or commit
