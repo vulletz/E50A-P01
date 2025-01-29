@@ -28,10 +28,11 @@ class TestDatabase(unittest.TestCase):
 
         # Write test results to CSV
         with open('test_results.csv', mode='w', newline='') as file:
+            user = os.getenv('GH_USER','')
             writer = csv.writer(file)
             writer.writerow(['Test', 'Result'])
             result_boolean = len(rows) == 2 and rows[0][1] == 'Alice' and rows[1][1] == 'Bob'
-            writer.writerow(['test_users_table', 'Passed' if result_boolean else 'Failed'])
+            writer.writerow(['test_users_table', user, 'Passed' if result_boolean else 'Failed'])
 
 if __name__ == '__main__':
     unittest.main()    
