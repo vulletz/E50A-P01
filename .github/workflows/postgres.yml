@@ -67,45 +67,6 @@ jobs:
         run: |
           cat data/test_results.csv test_results.csv > data/test_results.txt
           mv data/test_results.txt data/test_results.csv
+          cat data/test_results.csv
 
-      - name: Commit and Push Changes
-        if: env.DIFFERENT_CSV == 'true'
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
 
-          git pull
-          git fetch
-          
-          branch_name="auto-pr-branch"
-      
-          git checkout -b "$branch_name"
-      
-          git add data/test_results.csv
-      
-          git commit -m "Update CSV file"
-      
-          # Pull the latest changes from the remote branch
-          git pull origin main --rebase
-      
-          # Push the changes to the remote branch
-          git push origin "$branch_name"
-  
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Automated changes"
-          branch: "auto-pr-branch"
-          title: "Automated Pull Request"
-          body: "This pull request was created automatically by GitHub Actions."
-
-  approve-pull-request:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Approve Pull Request
-        uses: juliangruber/approve-pull-request-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.create-pull-request.outputs.pull-request-number }}
