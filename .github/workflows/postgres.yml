@@ -79,12 +79,6 @@ jobs:
           timestamp=$(date +'%Y%m%d%H%M%S')
           branch_name="update-csv-$timestamp"
 
-          # Configure how to reconcile divergent branches
-          git config pull.rebase false 
-
-          git pull origin results
-          git push origin results
-
           git checkout -b "$branch_name"
 
           git add data/test_results.csv
@@ -92,16 +86,15 @@ jobs:
           git commit -m "Update CSV file"
 
           git push origin "$branch_name"
-
-          git fetch
           
-          git checkout results
+          git checkout main
           git merge --no-ff --allow-unrelated-histories "$branch_name"
-          git push origin results
+          git push origin main
 
           # delete the temporary branch
           git branch -d "$branch_name"
-          git push origin --delete "$branch_name"          
+          git push origin --delete "$branch_name"
+          
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
