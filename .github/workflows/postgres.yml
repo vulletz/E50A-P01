@@ -88,7 +88,7 @@ jobs:
           git fetch
           
           git checkout results
-          git merge --no-ff "$branch_name"
+          git merge --no-ff --allow-unrelated-histories "$branch_name"
           git push origin results
 
           # delete the temporary branch
