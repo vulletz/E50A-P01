@@ -63,7 +63,7 @@ jobs:
           fi
 
       - name: Overwrite CSV
-        if: env.DIFFERENT_CSV
+        if: env.DIFFERENT_CSV == 'true'
         run: |
           cat data/test_results.csv test_results.csv > data/test_results.txt
           mv data/test_results.txt data/test_results.csv
@@ -102,4 +102,3 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.create-pull-request.outputs.pull-request-number }}
-          
