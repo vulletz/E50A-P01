@@ -54,6 +54,47 @@ jobs:
         env:
           GH_USER: ${{ github.actor }}
 
+      - name: Check for differences
+        id: check-differences
+        run: |
+          if ! diff -q data/test_results.csv test_results.csv; then
+            echo "CSV files are different."
+            echo "DIFFERENT_CSV=true" >> $GITHUB_ENV
+          else
+            echo "CSV files are the same. Skipping commit."
+            echo "DIFFERENT_CSV=false" >> $GITHUB_ENV
+          fi
+
+      - name: Overwrite CSV
+        if: env.DIFFERENT_CSV
+        run: |
+          test_results.csv data/test_results.csv >> data/test_results.csv
+
+      - name: Commit and Push Changes
+        if: env.DIFFERENT_CSV == 'true'
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+          timestamp=$(date +'%Y%m%d%H%M%S')
+          branch_name="update-csv-$timestamp"
+
+          git checkout -b "$branch_name"
+
+          git add data/test_results.csv
+
+          git commit -m "Update CSV file"
+
+          git push origin "$branch_name"
+
+          git checkout main
+          git merge --no-ff "$branch_name"
+          git push origin main
+
+          # delete the temporary branch
+          git branch -d "$branch_name"
+          git push origin --delete "$branch_name"          
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:

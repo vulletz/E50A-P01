@@ -30,7 +30,6 @@ class TestDatabase(unittest.TestCase):
         with open('test_results.csv', mode='w', newline='') as file:
             user = os.getenv('GH_USER','')
             writer = csv.writer(file)
-            writer.writerow(['Test', 'Result'])
             result_boolean = len(rows) == 2 and rows[0][1] == 'Alice' and rows[1][1] == 'Bob'
             writer.writerow(['test_users_table', user, 'Passed' if result_boolean else 'Failed'])
 
