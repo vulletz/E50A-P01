@@ -93,7 +93,6 @@ jobs:
           git branch -d "$branch_name"
           git push origin --delete "$branch_name"
           
-
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
