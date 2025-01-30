@@ -6,6 +6,8 @@ CREATE TABLE USERS (
   email varchar(100) NOT NULL
 );
 
+CREATE INDEX users_idx_name ON USERS(name);
+
 -- insert
 INSERT INTO USERS (name, email) VALUES ('Alice', 'alice@example.com');
 INSERT INTO USERS (name, email) VALUES ('Bob', 'bob@example.com');
