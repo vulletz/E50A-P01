@@ -12,3 +12,8 @@ INSERT INTO USERS (name, email) VALUES ('Bob', 'bob@example.com');
 
 -- fetch 
 SELECT * FROM USERS;
+
+INSERT INTO USERS (name, email) VALUES ('Jose', 'jose@example.com');
+INSERT INTO USERS (name, email) VALUES ('Ana', 'ana@example.com');
+
+SELECT * FROM USERS WHERE id = 3;
